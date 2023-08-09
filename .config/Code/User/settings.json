@@ -1,0 +1,69 @@
+{
+    "editor.fontFamily": "'FiraCode', 'Noto Mono', monospace",
+    "editor.fontLigatures": true,
+    "window.menuBarVisibility": "toggle",
+    "window.commandCenter": true,
+    "editor.minimap.autohide": true,
+    "editor.minimap.enabled": true,
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.scale": 1,
+    "editor.minimap.showSlider": "mouseover",
+    "editor.minimap.side": "right",
+    "breadcrumbs.enabled": true,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorSmoothCaretAnimation": "off",
+    "editor.cursorSurroundingLines": 10,
+    "editor.cursorSurroundingLinesStyle": "default",
+    "workbench.colorCustomizations": {
+        "editorCursor.background": "#000000",
+        "editorCursor.foreground": "#c900ec",
+    },
+    "editor.hover.delay": 300,
+    "workbench.hover.delay": 1,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": "active",
+    "editor.guides.highlightActiveBracketPair": true,
+    "editor.guides.highlightActiveIndentation": true,
+    "editor.guides.indentation": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.occurrencesHighlight": true,
+    "workbench.list.smoothScrolling": true,
+    "editor.fastScrollSensitivity": 5,
+    "editor.smoothScrolling": false,
+    "editor.stickyScroll.enabled": true,
+    "editor.wordWrap": "on",
+    "editor.codeLens": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": false,
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.emptyWindow": true,
+    "security.workspace.trust.enabled": false,
+    "security.workspace.trust.startupPrompt": "never",
+    // vim
+    "vim.leader": ",",
+    "vim.visualModeKeyBindings": [],
+    "vim.visualModeKeyBindingsNonRecursive": [],
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<esc>"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [],
+    "update.mode": "none",
+    "extensions.autoUpdate": false,
+    "window.autoDetectColorScheme": true,
+    "redhat.telemetry.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "git.confirmSync": false,
+    "workbench.startupEditor": "none"
+}
