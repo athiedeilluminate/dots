@@ -1,4 +1,13 @@
 set nocompatible "more vim-like, less vi-like
+call plug#begin()
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'bling/vim-bufferline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'hashivim/vim-terraform', {'for':'terraform'}
+call plug#end()
+
 set backspace=2
 "reload vimrc on F5, spelling on F6
 nnoremap <F5> :so $MYVIMRC<cr>
@@ -16,7 +25,7 @@ set smartindent "indent on new line
 "tab options
 set tabstop=4
 set shiftwidth=4
-set expandtab
+"set expandtab
 filetype indent on "filetype-specific indents
 set linebreak
 
@@ -44,12 +53,13 @@ set hlsearch "highlight matches
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 "statusline
-set laststatus=2
-set statusline=%#PmenuSel#%#LineNr#\ %f%m\ %=%#CursorColumn#\ %y\ %{&fileencoding?&fileencoding:&encoding}\[%{&fileformat}\]\ %p%%\ %l:%c\ 
-
+let g:airline_theme='minimalist'
+let g:airline_extensions = ['branch','bufferline']
 "custom keymaps
 let mapleader=","
 inoremap jj <esc>
+nnoremap bn :bnext<cr>
+nnoremap bN :bprevious<cr>
 nnoremap <F4> :! %<cr>
 nnoremap <F2> :NERDTreeToggle<cr>
 nnoremap <leader>f :NERDTreeToggle<cr>
