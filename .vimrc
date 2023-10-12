@@ -21,6 +21,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-terraform', {'for':'terraform'}
+Plug 'Exafunction/codeium.vim'
 call plug#end()
 
 set backspace=2
