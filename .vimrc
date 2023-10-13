@@ -35,6 +35,9 @@ set guifont=Fira\ Mono\ 11
 set t_Co=256 "256 colors in terminal
 "set cc=80
 
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
 set number "line numberings
 set smartindent "indent on new line
 
