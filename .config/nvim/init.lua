@@ -2,6 +2,18 @@ local set=vim.opt
 local vg=vim.g
 local kmap=vim.keymap.set
 
+local Plug = vim.fn['plug#']
+vim.call('plug#begin', '~/.config/nvim/plugged')
+Plug 'preservim/nerdtree'
+Plug 'bling/vim-bufferline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'hashivim/vim-terraform'
+Plug 'Exafunction/codeium.vim'
+vim.call('plug#end')
+
 set.number=true
 set.relativenumber=true
 set.backspace='2'
@@ -21,7 +33,8 @@ set.shiftwidth=4
 set.linebreak=true
 vg.filetype='indent on'
 
-set.statusline="%#PmenuSel#%#LineNr# %f%m %=%#CursorColumn# %y %{&fileencoding?&fileencoding:&encoding}[%{&fileformat}] %p%% %l:%c"
+vg.airline_theme='minimalist'
+vg.airline_extensions={'branch', 'bufferline'}
 
 set.mouse='a'
 --set.wildmode='longest,list,full'
@@ -51,7 +64,7 @@ kmap('n','<leader>B', ':G blame<cr>')
 kmap('n','<leader>gf', ':edit %:h/<cfile><CR>')
 
 -- buffer bar plugin - don't use icons
-require'barbar'.setup { icons = { filetype = { enabled = false } } }
+--require'barbar'.setup { icons = { filetype = { enabled = false } } }
 kmap('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
 
 -- codeium AI enabled/disabled
