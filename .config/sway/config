@@ -53,6 +53,12 @@ input type:keyboard {
 	xkb_options caps:super,shift:both_capslock
 	#xkb_options caps:escape_shifted_capslock
 }
+input '9610:73:SINO_WEALTH_Gaming_KB' {
+	xkb_layout "us-remap-esape-60pct"
+	repeat_rate 50
+	repeat_delay 500 
+	xkb_options caps:super,shift:both_capslock
+}
 seat * hide_cursor when-typing disable
 seat * xcursor_theme Adwaita
 ### Key bindings

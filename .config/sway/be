@@ -1,2 +1,0 @@
-set $menu bemenu-run -i -p "$" --tf "#ffffff" --ab "#121212FF" --af "#CACACAFF" --hb "#285577" --hf "#ffffff" --fn "Monospace 14"| xargs swaymsg exec --
-set $menu2 j4-dmenu-desktop --dmenu='bemenu -i --tf "#ffffff" --hb "#285577" --hf "#ffffff" --ab "#121212FF" --af "#CACACAFF" -p ">" --fn "Monospace 14"' --term='alacritty' | xargs swaymsg exec --
