@@ -1,72 +1,96 @@
-local set=vim.opt
-local vg=vim.g
 local kmap=vim.keymap.set
+local o=vim.opt
+local g=vim.g
 
-local Plug = vim.fn['plug#']
-vim.call('plug#begin', '~/.config/nvim/plugged')
-Plug 'preservim/nerdtree'
-Plug 'bling/vim-bufferline'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'hashivim/vim-terraform'
-Plug 'Exafunction/codeium.vim'
-vim.call('plug#end')
+o.number=true
+o.backspace='2'
+o.guicursor='i:block'
+o.splitright=true
+o.splitbelow=true
+o.softtabstop=4
+o.shiftwidth=4
+o.smartindent=true
+o.linebreak=true
 
-set.number=true
-set.relativenumber=true
-set.backspace='2'
-set.background='dark'
---set.cc='80'
-set.ignorecase=true
-set.smartcase=true
-set.incsearch=true
-set.hlsearch=true
--- block cursor
-set.guicursor='i:block'
-
-set.smartindent=true
-set.tabstop=4
-set.shiftwidth=4
---set.expandtab=true
-set.linebreak=true
-vg.filetype='indent on'
-
-vg.airline_theme='minimalist'
-vg.airline_extensions={'branch', 'bufferline'}
-
-set.mouse='a'
---set.wildmode='longest,list,full'
-set.wildmenu=true
-
+g.t_Co=256
+g.mapleader = " "
+kmap("n", "<leader>pv", vim.cmd.Ex)
 kmap('n','<C-w>N',':vnew<CR>')
 kmap('n','<C-h>','<C-w>h')
 kmap('n','<C-j>','<C-w>j')
 kmap('n','<C-k>','<C-w>k')
 kmap('n','<C-l>','<C-w>l')
 
-vg.mapleader=','
-kmap('n','bn',':bNext<CR>')
+kmap('n','bn',':bnext<CR>')
+kmap('n','bN',':bprevious<CR>')
+
 kmap('n','<F6>',':setlocal spell! spelllang=en_us<CR>')
 kmap('n','<F5>', ":so ~/.config/nvim/init.lua<CR>")
 kmap('n','<Leader>r', ":so ~/.config/nvim/init.lua<CR>")
-kmap('n','<leader>f', ':NERDTreeToggle<cr>')
 kmap('n','<Leader>h', ':nohlsearch<CR>')
 kmap('t','<ESC>','<C-w>:q!<CR>')
 kmap('i','jj','<esc>')
-kmap('n','<F4>', ':! %<cr>')
-kmap('n','<F2>', ':NERDTreeToggle<cr>')
 kmap('n','bD', ':set background=dark<cr>')
 kmap('n','bL', ':set background=light<cr>')
 kmap('n','<leader>D', ':Gdiff<cr>')
 kmap('n','<leader>B', ':G blame<cr>')
 kmap('n','<leader>gf', ':edit %:h/<cfile><CR>')
 
--- buffer bar plugin - don't use icons
---require'barbar'.setup { icons = { filetype = { enabled = false } } }
-kmap('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
+-- remember last place
+local lastplace = vim.api.nvim_create_augroup("LastPlace", {})
+vim.api.nvim_clear_autocmds({ group = lastplace })
+vim.api.nvim_create_autocmd("BufReadPost", { group = lastplace, pattern = { "*" }, desc = "remember last cursor place", callback = function() local mark = vim.api.nvim_buf_get_mark(0, '"') local lcount = vim.api.nvim_buf_line_count(0) if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end end, })
 
--- codeium AI enabled/disabled
-vg.codeium_enabled = false
+-- plugins with vim-plug
+vim.cmd [[
+" Install vim-plug if not found
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
 
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+call plug#begin('~/.config/nvim/plugged')
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'nvim-lua/plenary.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'tpope/vim-fugitive'
+Plug 'exafunction/codeium.vim'
+call plug#end()
+]]
+
+vim.keymap.set("n","<leader>gs",vim.cmd.Git)
+
+local lspconfig = require('lspconfig')
+
+require('lualine').setup {
+  options = { theme  = 'iceberg' },
+}
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n','<leader>pf', builtin.find_files, {})
+vim.keymap.set('n','<leader>f', builtin.find_files, {})
+vim.keymap.set('n','<C-p>', builtin.git_files, {})
+vim.keymap.set('n','<leader>ps', function()
+	builtin.grep_string( { search=vim.fn.input("grep > ") })
+end)
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "lua", "vim", "vimdoc", "query", "bash", "rust", "c", "go" },
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = false,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
