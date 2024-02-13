@@ -62,10 +62,25 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'tpope/vim-fugitive'
 Plug 'exafunction/codeium.vim'
+Plug 'ellisonleao/gruvbox.nvim'
+Plug 'jvirtanen/vim-hcl', { 'for' : 'hcl' }
 call plug#end()
 ]]
 
-vim.keymap.set("n","<leader>gs",vim.cmd.Git)
+--o.termguicolors = true
+require("gruvbox").setup({
+    terminal_colors = true,
+    transparent_mode = true,
+})
+vim.cmd("colorscheme gruvbox")
+
+g.codeium_filetypes = {
+   markdown = false,
+   text = false
+}
+kmap("n",'<leader>ai',':CodeiumToggle<cr>')
+
+kmap("n","<leader>gs",vim.cmd.Git)
 
 local lspconfig = require('lspconfig')
 
@@ -74,16 +89,16 @@ require('lualine').setup {
 }
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n','<leader>pf', builtin.find_files, {})
-vim.keymap.set('n','<leader>f', builtin.find_files, {})
-vim.keymap.set('n','<C-p>', builtin.git_files, {})
-vim.keymap.set('n','<leader>ps', function()
+kmap('n','<leader>pf', builtin.find_files, {})
+kmap('n','<leader>f', builtin.find_files, {})
+kmap('n','<C-p>', builtin.git_files, {})
+kmap('n','<leader>ps', function()
 	builtin.grep_string( { search=vim.fn.input("grep > ") })
 end)
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "lua", "vim", "vimdoc", "query", "bash", "rust", "c", "go" },
+  ensure_installed = { "lua", "vim", "vimdoc", "query", "bash", "rust", "c", "go", "ruby", "markdown", "python", "yaml" },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
   -- Automatically install missing parsers when entering buffer
