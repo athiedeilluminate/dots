@@ -11,6 +11,7 @@ o.softtabstop=4
 o.shiftwidth=4
 o.smartindent=true
 o.linebreak=true
+o.laststatus=0
 
 g.t_Co=256
 g.mapleader = " "
@@ -35,6 +36,8 @@ kmap('n','bL', ':set background=light<cr>')
 kmap('n','<leader>D', ':Gdiff<cr>')
 kmap('n','<leader>B', ':G blame<cr>')
 kmap('n','<leader>gf', ':edit %:h/<cfile><CR>')
+kmap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+kmap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- remember last place
 local lastplace = vim.api.nvim_create_augroup("LastPlace", {})
@@ -58,21 +61,21 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
   Plug 'nvim-lua/plenary.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'tpope/vim-fugitive'
 Plug 'exafunction/codeium.vim'
-Plug 'ellisonleao/gruvbox.nvim'
+Plug 'adamthiede/nvim-bufbar'
 Plug 'jvirtanen/vim-hcl', { 'for' : 'hcl' }
+"Plug 'ellisonleao/gruvbox.nvim'
 call plug#end()
 ]]
 
---o.termguicolors = true
-require("gruvbox").setup({
-    terminal_colors = true,
-    transparent_mode = true,
-})
-vim.cmd("colorscheme gruvbox")
+require('bufbar').setup {
+    theme = 'muted',
+    position = 'bottom',
+    show_tabs = false,
+    show_bufname = 'all',
+}
 
 g.codeium_filetypes = {
    markdown = false,
@@ -84,9 +87,6 @@ kmap("n","<leader>gs",vim.cmd.Git)
 
 local lspconfig = require('lspconfig')
 
-require('lualine').setup {
-  options = { theme  = 'iceberg' },
-}
 
 local builtin = require('telescope.builtin')
 kmap('n','<leader>pf', builtin.find_files, {})
